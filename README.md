@@ -44,3 +44,48 @@ echo "deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudf
 
 sudo apt-get update && sudo apt-get install cloudflared
 ```
+
+## Now we will create tunnel that will connect our localhost apache webserver to our domain that we bought.
+
+```bash
+
+cloudflared tunnel login
+```
+Running this command will:
+
+    1. Open a browser window and prompt you to log in to your Cloudflare account. After logging in to your account, select your hostname.
+    2. Generate an account certificate, the cert.pem file, in the default cloudflared directory.
+
+```bash
+
+cloudflared tunnel create <Tunnel_Name>
+```
+Running this command will:
+
+    1. Create a tunnel by establishing a persistent relationship between the name you provide and a UUID for your tunnel. At this point, no connection is active within the tunnel yet.
+    2. Generate a tunnel credentials file in the default cloudflared directory.
+    3. Create a subdomain of .cfargotunnel.com.
+
+Afetr that, In your .cloudflared directory, create a config.yml file using any text editor. This file will configure the tunnel to route traffic from a given origin to the hostname of your choice.
+
+config.yml:
+
+```bash
+url: http://localhost:8000
+tunnel: <Tunnel-UUID>
+credentials-file: /root/.cloudflared/<Tunnel-UUID>.json
+```
+
+Now assign a CNAME record that points traffic to your tunnel subdomain:
+
+```bash
+cloudflared tunnel route dns <tunnel_UUID or tunnel_NAME> <hostname or domain name that you bought from digitalplat>
+```
+
+## Run the tunnel
+
+```bash
+cloudflared tunnel run <UUID or NAME>
+```
+
+Now, open private window and try to access your domain.
