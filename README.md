@@ -52,19 +52,17 @@ sudo apt-get update && sudo apt-get install cloudflared
 cloudflared tunnel login
 ```
 Running this command will:
-
-    Open a browser window and prompt you to log in to your Cloudflare account. After logging in to your account, select your hostname.
-    Generate an account certificate, the cert.pem file, in the default cloudflared directory.
+Open a browser window and prompt you to log in to your Cloudflare account. After logging in to your account, select your hostname.
+Generate an account certificate, the cert.pem file, in the default cloudflared directory.
 
 ```bash
 
 cloudflared tunnel create <Tunnel_Name>
 ```
 Running this command will:
-
-    Create a tunnel by establishing a persistent relationship between the name you provide and a UUID for your tunnel. At this point, no connection is active within the tunnel yet.
-    Generate a tunnel credentials file in the default cloudflared directory.
-    Create a subdomain of .cfargotunnel.com.
+Create a tunnel by establishing a persistent relationship between the name you provide and a UUID for your tunnel. At this point, no connection is active within the tunnel yet.
+Generate a tunnel credentials file in the default cloudflared directory.
+Create a subdomain of .cfargotunnel.com.
 
 Afetr that, In your .cloudflared directory, create a config.yml file using any text editor. This file will configure the tunnel to route traffic from a given origin to the hostname of your choice.
 
